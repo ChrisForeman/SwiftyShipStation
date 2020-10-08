@@ -3,5 +3,5 @@ import XCTest
 
 final class SwiftyShipStationTests: XCTestCase {
 
-    static var allTests:[(String, (SwiftyShipStationTests) -> () -> ())] = []
+
 }

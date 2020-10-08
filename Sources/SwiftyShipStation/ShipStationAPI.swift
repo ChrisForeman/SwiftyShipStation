@@ -12,6 +12,7 @@ open class ShipStationAPI {
     
     //MARK: Private Props
     
+    #warning("TODO: Remove public shared and keep it internal. Then calls to the API won't include .shared for better code semantics.")
     private static var _shared:ShipStationAPI!
     
     private var rootEndPoint:String
@@ -19,6 +20,16 @@ open class ShipStationAPI {
     private var publicKey:String
     
     private var privateKey:String
+    
+    private var authHeader:[String:String] {
+        return ["Authorization":"Basic \(credentials)"]
+    }
+    
+    private var credentials:String {
+        guard let credentialData = "\(publicKey):\(privateKey)".data(using: String.Encoding.utf8) else { return "" }
+        return credentialData.base64EncodedString(options: [])
+    }
+    
     
     //MARK: Public Props
     
@@ -48,9 +59,21 @@ open class ShipStationAPI {
     
     //MARK: API Call Methods
     
-    public func listOrders() -> String {
+    public func listOrders() -> OrderListRequest {
         let endPoint = "\(rootEndPoint)/orders"
-        return ""
+        let request = OrderListRequest(endPoint: endPoint, headers: authHeader)
+        return request
+    }
+    
+    ///New label request with all required parameters
+    public func createLabel(orderID: Int, carrierCode: ShipmentLabelRequest.Carrier? = nil, serviceCode: ShipmentLabelRequest.ServiceCode? = nil, confirmation: ShipmentLabelRequest.Confirmation? = nil, shipDate: Date, testLabel: Bool) -> ShipmentLabelRequest {
+        let endpoint = "\(rootEndPoint)/orders/createlabelfororder"
+        
+        var headers = authHeader
+        headers["Content-Type"] = "application/json"
+        
+        let request = ShipmentLabelRequest(endPoint: endpoint, headers: headers, orderID: orderID, carrierCode: carrierCode, serviceCode: serviceCode, confirmation: confirmation, shipDate: shipDate, testLabel: testLabel)
+        return request
     }
     
 }
