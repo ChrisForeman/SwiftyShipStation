@@ -10,11 +10,11 @@ import Foundation
 
 public struct ShipmentLabel: Codable {
     
-    let shipmentID:Int
-    let shipmentCost:Decimal
-    let insuranceCost:Decimal
-    let tracking:String
-    let dataString:String
+    public let shipmentID:Int
+    public let shipmentCost:Decimal
+    public let insuranceCost:Decimal
+    public let tracking:String
+    public let dataString:String
     
     enum CodingKeys:String, CodingKey {
         case shipmentID = "shipmentId"
