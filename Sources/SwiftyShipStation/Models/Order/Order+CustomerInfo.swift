@@ -9,16 +9,16 @@ import Foundation
 
 extension Order {
     
-struct ShipStationCustomerInfo: Codable {
+public struct ShipStationCustomerInfo: Codable {
     
-    let name:String
-    let company: String?
-    let street1, street2: String?
-    let street3: String?
-    let city, state, postalCode, country: String?
-    let phone: String?
-    let residential: Bool?
-    let addressVerified: String?
+    public let name:String
+    public let company: String?
+    public let street1, street2: String?
+    public let street3: String?
+    public let city, state, postalCode, country: String?
+    public let phone: String?
+    public let residential: Bool?
+    public let addressVerified: String?
 }
     
 }

@@ -34,7 +34,7 @@ extension RestAPIRequest {
         return self
     }
     
-    mutating func setBody(with dict: [String:Any]) {
+    public mutating func setBody(with dict: [String:Any]) {
         guard !dict.isEmpty else { return }
         do {
             self.body = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
@@ -44,7 +44,7 @@ extension RestAPIRequest {
     }
     
     ///Converts the RestAPIRequest to a URLRequest, sends it off via URLSession and tries to decode the response to the Requests associated type.
-    func send(completion: @escaping (Swift.Result<ResponseType, Error>) -> Void) {
+    public func send(completion: @escaping (Swift.Result<ResponseType, Error>) -> Void) {
         var url = URLComponents(string: self.endPoint)!
         //Add params to the url.
         url.queryItems = parameters?.map {

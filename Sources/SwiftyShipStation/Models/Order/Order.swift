@@ -8,22 +8,22 @@
 
 import Foundation
 
-struct Order: Codable {
+public struct Order: Codable {
     
-    let orderID: Int
-    let orderNumber:String
+    public let orderID: Int
+    public let orderNumber:String
 
-    let shipByDate: Date?
-    let orderStatus: String
-    let shipTo: ShipStationCustomerInfo
-    let items: [ShipStationItem]
-    let orderTotal:Decimal
-    let customerNotes, internalNotes: String?
-    let paymentMethod:String?
-    let requestedShippingService: String?
-    let externallyFulfilled: Bool?
-    let datePlaced:String
-    let customerUsername:String?
+    public let shipByDate: Date?
+    public let orderStatus: String
+    public let shipTo: ShipStationCustomerInfo
+    public let items: [ShipStationItem]
+    public let orderTotal:Decimal
+    public let customerNotes, internalNotes: String?
+    public let paymentMethod:String?
+    public let requestedShippingService: String?
+    public let externallyFulfilled: Bool?
+    public let datePlaced:String
+    public let customerUsername:String?
     
     enum CodingKeys: String, CodingKey {
         case orderID = "orderId"

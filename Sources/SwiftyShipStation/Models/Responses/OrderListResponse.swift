@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OrdersListResponse:Codable {
+public struct OrdersListResponse:Codable {
     
     let orders:[Order]
     let total:Int

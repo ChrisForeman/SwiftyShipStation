@@ -9,12 +9,12 @@ import Foundation
 
 extension Order {
     
-struct ShipStationItem: Codable {
+public struct ShipStationItem: Codable {
     
-    let sku: String
-    let name: String
-    let quantity:Int
-    let unitPrice: Decimal
+    public let sku: String
+    public let name: String
+    public let quantity:Int
+    public let unitPrice: Decimal
     
     enum CodingKeys: String, CodingKey {
         case sku, name

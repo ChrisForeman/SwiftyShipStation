@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ShipmentLabel: Codable {
+public struct ShipmentLabel: Codable {
     
     let shipmentID:Int
     let shipmentCost:Decimal
