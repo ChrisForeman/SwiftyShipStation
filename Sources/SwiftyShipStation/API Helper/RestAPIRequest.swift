@@ -8,7 +8,7 @@
 import Foundation
 
 
-protocol RestAPIRequest {
+public protocol RestAPIRequest {
     
     associatedtype ResponseType
     
@@ -26,15 +26,15 @@ protocol RestAPIRequest {
     
 }
 
-extension RestAPIRequest {
+public extension RestAPIRequest {
     
-    public mutating func addParam(name: String, value: String) -> Self {
+    mutating func addParam(name: String, value: String) -> Self {
         if parameters == nil { parameters = [:] }
         parameters![name] = value
         return self
     }
     
-    public mutating func setBody(with dict: [String:Any]) {
+    mutating func setBody(with dict: [String:Any]) {
         guard !dict.isEmpty else { return }
         do {
             self.body = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
@@ -44,7 +44,7 @@ extension RestAPIRequest {
     }
     
     ///Converts the RestAPIRequest to a URLRequest, sends it off via URLSession and tries to decode the response to the Requests associated type.
-    public func send(completion: @escaping (Swift.Result<ResponseType, Error>) -> Void) {
+    func send(completion: @escaping (Swift.Result<ResponseType, Error>) -> Void) {
         var url = URLComponents(string: self.endPoint)!
         //Add params to the url.
         url.queryItems = parameters?.map {
@@ -84,7 +84,7 @@ extension RestAPIRequest {
 }
 
 
-enum HTTPMethod:String {
+public enum HTTPMethod:String {
     case get = "GET"
     case post = "POST"
     case put = "PUT"

@@ -10,17 +10,17 @@ import Foundation
 
 public struct ShipmentLabelRequest:RestAPIRequest {
     
-    typealias ResponseType = ShipmentLabel
+    public typealias ResponseType = ShipmentLabel
     
-    var headers: [String : String]?
+    public var headers: [String : String]?
     
-    var parameters: [String : String]?
+    public var parameters: [String : String]?
     
-    var endPoint: String
+    public var endPoint: String
     
-    var body: Data?
+    public var body: Data?
     
-    var method: HTTPMethod
+    public var method: HTTPMethod
     
     public enum Confirmation:String {
         case none = "none"
