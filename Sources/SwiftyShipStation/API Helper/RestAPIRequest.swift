@@ -28,10 +28,11 @@ public protocol RestAPIRequest {
 
 public extension RestAPIRequest {
     
-    mutating func addParam(name: String, value: String) -> Self {
-        if parameters == nil { parameters = [:] }
-        parameters![name] = value
-        return self
+    func addParam(name: String, value: String) -> Self {
+        var newRequest = self
+        if newRequest.parameters == nil { newRequest.parameters = [:] }
+        newRequest.parameters?[name] = value
+        return newRequest
     }
     
     mutating func setBody(with dict: [String:Any]) {

@@ -9,9 +9,9 @@ import Foundation
 
 public struct OrdersListResponse:Codable {
     
-    let orders:[Order]
-    let total:Int
-    let page:Int
-    let pages:Int
+    public let orders:[Order]
+    public let total:Int
+    public let page:Int
+    public let pages:Int
     
 }
