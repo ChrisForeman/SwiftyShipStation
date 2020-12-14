@@ -62,7 +62,13 @@ public struct ShipmentLabelRequest:RestAPIRequest {
         dataDict["serviceCode"] = serviceCode?.rawValue
         dataDict["confirmation"] = confirmation?.rawValue
         
-        self.setBody(with: dataDict)
+        guard !dataDict.isEmpty else { return }
+        do {
+            self.body = try JSONSerialization.data(withJSONObject: dataDict, options: .prettyPrinted)
+        }catch {
+            return
+        }
+        
     }
 
 }

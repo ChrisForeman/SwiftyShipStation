@@ -10,7 +10,7 @@ import Foundation
 
 public protocol RestAPIRequest {
     
-    associatedtype ResponseType
+    associatedtype ResponseType:Decodable
     
     var headers: [String:String]? { get set }
     
@@ -35,15 +35,6 @@ public extension RestAPIRequest {
         return newRequest
     }
     
-    mutating func setBody(with dict: [String:Any]) {
-        guard !dict.isEmpty else { return }
-        do {
-            self.body = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
-        }catch {
-            return
-        }
-    }
-    
     ///Converts the RestAPIRequest to a URLRequest, sends it off via URLSession and tries to decode the response to the Requests associated type.
     func send(completion: @escaping (Swift.Result<ResponseType, Error>) -> Void) {
         var url = URLComponents(string: self.endPoint)!
@@ -56,31 +47,21 @@ public extension RestAPIRequest {
         var request = URLRequest(url: url.url!)
         request.httpMethod = self.method.rawValue
         request.allHTTPHeaderFields = self.headers
-    
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard
-                let data = data,
-                let response = response as? HTTPURLResponse,
-                (200 ..< 300) ~= response.statusCode,
-                error == nil
-            else {
+        request.httpBody = self.body
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else {
                 //Safe force unwrap
                 completion(.failure(error!))
                 return
             }
             do {
-                let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-                guard let object = json as? ResponseType else {
-                    completion(.failure(HTTPResponseError.castErr(json, ResponseType.self)))
-                    return
-                }
+                let object = try JSONDecoder().decode(ResponseType.self, from: data)
                 completion(.success(object))
             } catch (let serializeErr) {
                 completion(.failure(serializeErr))
             }
-        }
-        //Must call for completion block to execute.
-        task.resume()
+        }.resume()
     }
 }
 

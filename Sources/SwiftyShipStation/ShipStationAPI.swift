@@ -66,10 +66,10 @@ open class ShipStationAPI {
     }
     
     ///New label request with all required parameters
-    public func createLabel(orderID: Int, carrierCode: ShipmentLabelRequest.Carrier? = nil, serviceCode: ShipmentLabelRequest.ServiceCode? = nil, confirmation: ShipmentLabelRequest.Confirmation? = nil, shipDate: Date, testLabel: Bool) -> ShipmentLabelRequest {
-        let endpoint = "\(rootEndPoint)/orders/createlabelfororder"
+    static public func createLabel(orderID: Int, carrierCode: ShipmentLabelRequest.Carrier? = nil, serviceCode: ShipmentLabelRequest.ServiceCode? = nil, confirmation: ShipmentLabelRequest.Confirmation? = nil, shipDate: Date, testLabel: Bool) -> ShipmentLabelRequest {
+        let endpoint = "\(shared.rootEndPoint)/orders/createlabelfororder"
         
-        var headers = authHeader
+        var headers = shared.authHeader
         headers["Content-Type"] = "application/json"
         
         let request = ShipmentLabelRequest(endPoint: endpoint, headers: headers, orderID: orderID, carrierCode: carrierCode, serviceCode: serviceCode, confirmation: confirmation, shipDate: shipDate, testLabel: testLabel)
